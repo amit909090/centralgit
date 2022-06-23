@@ -18,10 +18,6 @@
     user:
        name: node_exporter
        shell: /bin/false
-  - name: copy node_exporter.service file
-    copy:
-     src: /etc/ansible/files/node_exporter.service
-     dest: /etc/systemd/system/
   - name: Change the permission of service file
     file: 
       path: /etc/systemd/system/node_exporter.service
