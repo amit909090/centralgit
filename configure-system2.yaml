@@ -1,0 +1,29 @@
+---
+- hosts: mail
+  become: true
+  tasks:
+
+  - name: download the zabbix agent deb file
+    get_url:
+        url: https://repo.zabbix.com/zabbix/5.2/debian/pool/main/z/zabbix-release/zabbix-release_5.2-1+debian10_all.deb 
+        dest: /home/admin
+  - name: add the deb file into ubuntu repository
+    command: chdir=/home/admin dpkg -i zabbix-release_5.2-1+debian10_all.deb
+  - name: update repository
+    apt:
+      update_cache: yes
+  - name: install the zabbix agent
+    apt:
+     name: zabbix-agent2
+     state: present
+  - name: generate PSK key
+    shell: sh -c "openssl rand -hex 32 > /etc/zabbix/zabbix_agentd.psk"
+  - name: copy the zabbix_agentd.conf file from ansible machine to remote machine
+    copy:
+      src: /etc/ansible/files/zabbix_agentd.conf
+      dest: /etc/zabbix/zabbix_agentd.conf
+      owner: root
+      group: root
+      mode: 0644
+      backup: yes
+  - name: start zabbix service
