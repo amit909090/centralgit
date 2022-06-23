@@ -6,9 +6,9 @@
   - name: download the zabbix agent deb file
     get_url:
         url: https://repo.zabbix.com/zabbix/5.2/debian/pool/main/z/zabbix-release/zabbix-release_5.2-1+debian10_all.deb 
-        dest: /home/admin
+        dest: /home/ubuntu
   - name: add the deb file into ubuntu repository
-    command: chdir=/home/admin dpkg -i zabbix-release_5.2-1+debian10_all.deb
+    command: chdir=/home/ubuntu dpkg -i zabbix-release_5.2-1+debian10_all.deb
   - name: update repository
     apt:
       update_cache: yes
