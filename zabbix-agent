@@ -1,5 +1,5 @@
 ---
-- hosts: mail
+- hosts: 43.204.221.253
   become: true
   tasks:
 
